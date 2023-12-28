@@ -4,8 +4,8 @@
     angular.module('CounterApp', []) 
     .controller('CounterController', CounterController);
 
-    CounterController.$inject = ['$scope'];
-    function CounterController($scope) {
+    CounterController.$inject = ['$scope', '$timeout'];
+    function CounterController($scope, $timeout) {
         $scope.onceCounter = 0; 
         $scope.counter = 0;
         $scope.name = "Adan";
@@ -16,10 +16,22 @@
         $scope.countOnce = function () {
             $scope.onceCounter = 1;
         };   
+        /*
         $scope.upCounter = function () {
-            $scope.counter++;
+            setTimeout(function() {
+                $scope.$apply(function () {
+                    $scope.counter++;
+                    console.log("Counter incremented!");
+                })
+            }, 2000)
         };
-
+        */
+       $scope.upCounter = function () {
+        $timeout(function () {
+            $scope.counter++;
+            console.log("Counter incremented");
+        }, 2000)
+       };
         $scope.$watch(function () { // Catch the digest loop
             console.log("Digest Loop Fired")
         })
